@@ -14,12 +14,10 @@ add_library(DriverHistory STATIC DriverHistory.cpp DriverHistory.hpp)
 
 if(TESTS)
     find_package(Threads REQUIRED)
-    add_library(tests STATIC
-        tests/test_GetSleepBounds.cpp
-        tests/test_GetSleepBounds.hpp)
+    include_directories("tests/")
     add_executable(${PROJECT_NAME} tests/main.cpp)
     target_link_libraries(${PROJECT_NAME}
-        PRIVATE DriverHistory gtest Threads::Threads tests
+        PRIVATE DriverHistory gtest Threads::Threads
     )
 else()
     add_executable(${PROJECT_NAME} main.cpp)

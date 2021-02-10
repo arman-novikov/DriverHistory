@@ -1,6 +1,6 @@
 #include <chrono>
 
-#include "test_GetSleepBounds.hpp"
+#include "GetSleepBounds.hpp"
 
 int main(int argc, char* argv[])
 {
