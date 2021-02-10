@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <iostream>
 
 #include <gtest/gtest.h>
 
@@ -18,6 +19,11 @@ struct GetSleepBounds_data_set_t  {
     GetSleepBounds_data_set_t():
         ts{}, online_data{}, expected{}, name{}
     {}
+    friend std::ostream& operator<<(std::ostream& os,
+                                    const GetSleepBounds_data_set_t& obj)
+    {
+        return os << obj.name << std::endl;
+    }
     timestamp_t ts;
     std::vector<status_t> online_data;
     std::pair<opt_timestamp_t, opt_timestamp_t> expected;
@@ -77,6 +83,7 @@ TEST_P(GetSleepBoundsTest, GetSleepBounds) {
     online_data_t d(HISTORY_WINDOW_SIZE);
     d.insert(d.end(), param.online_data.begin(), param.online_data.end());
     dh->Update(d, TIMEPOINT);
+    //auto [begin, end] = dh->GetSleepBounds();
     EXPECT_EQ(dh->GetSleepBounds(), param.expected);
 }
 

@@ -24,11 +24,11 @@ DriverHistory::GetSleepBounds() const
             opt_timestamp_t sleep_end = std::nullopt;
             if (it != onlineData_.rbegin()) {
                 sleep_end = Interim2Timestamp(
-                    timestamp_, onlineData_.rbegin() - it
+                    timestamp_, it - onlineData_.rbegin()
                 );
             }
             it += SLEEP;
-            while(*it == ONLINE && it != onlineData_.rend()){
+            while(*it == OFFLINE && it != onlineData_.rend()){
                 ++it;
             }
 
@@ -36,7 +36,7 @@ DriverHistory::GetSleepBounds() const
                 return {std::nullopt, sleep_end};
             }
             timestamp_t sleep_begin = Interim2Timestamp(
-                timestamp_, onlineData_.rbegin() - it
+                timestamp_, it - onlineData_.rbegin()
             );
             return {sleep_begin, sleep_end};
         }
