@@ -13,7 +13,7 @@ static constexpr size_t INTERIM_RATIO {BIG_INTERIM / SMALL_INTERIM};
 static constexpr size_t SLEEP {7U * INTERIM_RATIO};
 static constexpr size_t MAX_ON_ORDER {7U * INTERIM_RATIO};
 static constexpr size_t MAX_ONLINE {17U * INTERIM_RATIO};
-static constexpr size_t ONLINE_WINDOW_SIZE {
+static constexpr size_t HISTORY_WINDOW_SIZE {
         2*SLEEP + std::max(MAX_ON_ORDER, MAX_ONLINE)
 };
 

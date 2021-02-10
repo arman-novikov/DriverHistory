@@ -1,7 +1,7 @@
 #include "DriverHistory.hpp"
 
 DriverHistory::DriverHistory():
-    onlineData_(online_data_t(ONLINE_WINDOW_SIZE)),
+    onlineData_(online_data_t(HISTORY_WINDOW_SIZE)),
     onOrder_{0}
 {
 
@@ -154,7 +154,7 @@ DriverHistory::online_review_t DriverHistory::GetOnline() const
 
     auto from_ts = GetWorkStart();
     if (from_ts == std::nullopt) {
-        return {0U, ONLINE_WINDOW_SIZE};
+        return {0U, HISTORY_WINDOW_SIZE};
     }
 
     size_t offset = timestamp_t2interims(from_ts.value(), timestamp_);
