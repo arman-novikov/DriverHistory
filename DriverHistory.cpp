@@ -7,6 +7,44 @@ DriverHistory::DriverHistory():
 
 }
 
+std::pair<opt_timestamp_t, opt_timestamp_t>
+DriverHistory::GetSleepBounds() const
+{
+    if (onlineData_.size() < SLEEP) {
+        return {std::nullopt, std::nullopt}; // better to throw an exception "not enough data"
+    }
+    auto it = onlineData_.rbegin();
+    auto end = onlineData_.rend() - SLEEP;
+
+    while (it != end) {
+        size_t occurency_count = std::count(it,
+                                            it + SLEEP,
+                                            OFFLINE);
+        if (occurency_count == SLEEP) {
+            opt_timestamp_t sleep_end = std::nullopt;
+            if (it != onlineData_.rbegin()) {
+                sleep_end = Interim2Timestamp(
+                    timestamp_, onlineData_.rbegin() - it
+                );
+            }
+            it += SLEEP;
+            while(*it == ONLINE && it != onlineData_.rend()){
+                ++it;
+            }
+
+            if (it == onlineData_.rend()) {
+                return {std::nullopt, sleep_end};
+            }
+            timestamp_t sleep_begin = Interim2Timestamp(
+                timestamp_, onlineData_.rbegin() - it
+            );
+            return {sleep_begin, sleep_end};
+        }
+        ++it;
+    }
+    return {std::nullopt, std::nullopt};
+}
+
 std::vector<timestamp_t>
 DriverHistory::ProcessWindow(std::vector<status_t>& data, timestamp_t ts)
 {
@@ -68,7 +106,7 @@ void DriverHistory::Update(const online_data_t& online_data,
     timestamp_ = ts;
 }
 
-std::optional<timestamp_t> DriverHistory::GetWorkStart() const
+opt_timestamp_t DriverHistory::GetWorkStart() const
 {
     size_t res = 0;
     auto start = onlineData_.rbegin();

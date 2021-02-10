@@ -22,6 +22,7 @@ static constexpr status_t ONLINE {1U};
 static constexpr status_t OFFLINE {0U};
 typedef boost::circular_buffer<status_t> online_data_t;
 typedef std::time_t timestamp_t;
+typedef std::optional<timestamp_t> opt_timestamp_t;
 
 //std::chrono::time_point<std::chrono::system_clock>
 
@@ -42,8 +43,10 @@ public:
 
     void SetOnOrder(size_t on_order);
     on_order_review_t GetOnOrder() const;
-    std::optional<timestamp_t> GetWorkStart() const;
+    opt_timestamp_t GetWorkStart() const;
     online_review_t GetOnline() const;
+
+    std::pair<opt_timestamp_t, opt_timestamp_t> GetSleepBounds() const;
 public:
     static timestamp_t
         Interim2Timestamp(timestamp_t ts, size_t reverse_offset);
