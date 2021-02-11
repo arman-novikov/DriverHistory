@@ -1,4 +1,5 @@
 #include "GetSleepBounds.hpp"
+#include "Append.hpp"
 
 int main(int argc, char* argv[])
 {
