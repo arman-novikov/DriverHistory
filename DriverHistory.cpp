@@ -70,7 +70,7 @@ DriverHistory::ProcessWindow(std::vector<status_t>& data, timestamp_t ts)
 /*
  * todo: use a templated online_data ?
 */
-void DriverHistory::Update(const online_data_t& online_data,
+void DriverHistory::Append(const online_data_t& online_data,
             const timestamp_t& ts)
 {
     if (onlineData_.empty()) {

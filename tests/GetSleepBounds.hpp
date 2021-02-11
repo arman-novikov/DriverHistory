@@ -162,7 +162,7 @@ TEST_P(GetSleepBoundsTest, GetSleepBounds) {
     auto param = GetParam();
     online_data_t d(HISTORY_WINDOW_SIZE);
     d.insert(d.end(), param.online_data.begin(), param.online_data.end());
-    dh->Update(d, TIMEPOINT);
+    dh->Append(d, TIMEPOINT);
     EXPECT_EQ(dh->GetSleepBounds(), param.expected);
 }
 

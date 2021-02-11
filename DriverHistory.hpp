@@ -35,7 +35,7 @@ class DriverHistory
     typedef std::pair<size_t, std::optional<timestamp_t>> on_order_review_t;
 public:
     DriverHistory();
-    void Update(const online_data_t& online_data,                
+    void Append(const online_data_t& online_data,                
                 const timestamp_t& ts);
 
     std::vector<timestamp_t>
